@@ -14,7 +14,7 @@ RUN git clone --branch ${ETCD_BRANCH} https://github.com/coreos/etcd.git
 
 RUN cd etcd && ./build
 
-RUN cd etcd/bin/arm
+RUN cd etcd/bin && ls
 
 RUN [ "cross-build-end" ]
 
@@ -24,8 +24,8 @@ ENV ETCD_UNSUPPORTED_ARCH=arm
 
 RUN [ "cross-build-start" ]
 
-COPY --from=builder /go/src/github.com/coreos/etcd/bin/arm/etcd /usr/local/bin
-COPY --from=builder /go/src/github.com/coreos/etcd/bin/arm/etcdctl /usr/local/bin
+COPY --from=builder /go/src/github.com/coreos/etcd/bin/etcd /usr/local/bin
+COPY --from=builder /go/src/github.com/coreos/etcd/bin/etcdctl /usr/local/bin
 
 RUN etcd --version
 
