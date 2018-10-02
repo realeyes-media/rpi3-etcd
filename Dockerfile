@@ -1,6 +1,6 @@
 FROM resin/raspberrypi3-golang:1.10 as builder
 
-ENV ETCD_BRANCH release-3.3
+ENV ETCD_TAG v3.3.9
 ENV GOPATH=/go
 ENV GOOS=linux
 ENV GOARCH=arm
@@ -10,7 +10,9 @@ RUN [ "cross-build-start" ]
 
 WORKDIR /go/src/github.com/coreos
 
-RUN git clone --branch ${ETCD_BRANCH} https://github.com/coreos/etcd.git
+RUN git clone https://github.com/coreos/etcd.git
+
+RUN cd etcd && git checkout tags/${ETCD_TAG}
 
 RUN cd etcd && ./build
 
