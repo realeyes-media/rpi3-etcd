@@ -1,0 +1,12 @@
+FROM quay.io/coreos/etcd:v3.3.9 as builder
+
+ENV ETCD_TAG v3.3.9
+
+FROM resin/intel-nuc-alpine:3.8
+
+COPY --from=builder /usr/local/bin/etcd /usr/local/bin
+COPY --from=builder /usr/local/bin/etcdctl /usr/local/bin
+
+RUN etcd --version
+
+CMD ["etcd"]
